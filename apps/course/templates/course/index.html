@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Courses</title>
+</head>
+<body>
+    <div id="add_course">
+        <h3>Add a new course</h3>
+        <form action="/create" method="post">
+            {% csrf_token %}    
+            Name: <input type="text" name="name">
+            <br>
+            Description: <textarea name="description"></textarea>
+            <br>
+            <input type="submit" value="Add">
+        </form>
+    </div>
+    <div id="list_course">
+            <h3> Courses </h3>        
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Date Added</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.description }}</td>
+                    <td>{{ course.created_at}}</td>
+                    <td>
+                        <a href="{{course.id}}/confirm">Remove</a> 
+                    </td>
+                </tr>
+                    {% endfor %}           
+                </tbody>
+            </table>
+
+    </div>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>
